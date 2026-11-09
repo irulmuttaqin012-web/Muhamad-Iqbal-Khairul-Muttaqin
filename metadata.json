@@ -1,0 +1,6 @@
+{
+  "name": "Suara Maksi — Ruang Dengar Magister Akuntansi UNDIP",
+  "description": "Ruang aman, interaktif, dan rahasia bagi mahasiswa Magister Akuntansi (S2) Universitas Diponegoro untuk menceritakan kendala perkuliahan dan tesis.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

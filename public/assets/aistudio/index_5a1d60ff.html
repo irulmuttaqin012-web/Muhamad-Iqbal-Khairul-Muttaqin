@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Suara Maksi — Ruang Dengar Magister Akuntansi UNDIP</title>
+  <meta name="description" content="Ruang aman, interaktif, dan rahasia bagi mahasiswa Magister Akuntansi (S2) Universitas Diponegoro untuk menceritakan kendala perkuliahan dan tesis." />
+  
+  <!-- Favicon / Tab Icon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+
+  <!-- Google Fonts: Poppins & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            undip: {
+              navy: '#0A2540',
+              'navy-dark': '#061729',
+              'navy-light': '#16385C',
+              gold: '#F4A213',
+              'gold-hover': '#DF900B',
+              'gold-light': '#FEF3D6',
+              orange: '#E66926',
+              blue: '#0284C7',
+              gray: '#F8FAFC',
+            }
+          },
+          fontFamily: {
+            heading: ['Poppins', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.4s ease-out forwards',
+            'slide-up': 'slideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            'pulse-soft': 'pulseSoft 3s ease-in-out infinite',
+            'float': 'float 4s ease-in-out infinite',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            slideUp: {
+              '0%': { opacity: '0', transform: 'translateY(24px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            pulseSoft: {
+              '0%, 100%': { transform: 'scale(1)', opacity: '0.9' },
+              '50%': { transform: 'scale(1.03)', opacity: '1' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-8px)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar & Glassmorphism */
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc;
+      overflow-x: hidden;
+    }
+    h1, h2, h3, h4, .font-heading {
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .bg-mesh {
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(10, 37, 64, 0.04) 0px, transparent 50%),
+        radial-gradient(at 100% 10%, rgba(244, 162, 19, 0.08) 0px, transparent 40%),
+        radial-gradient(at 50% 100%, rgba(230, 105, 38, 0.04) 0px, transparent 50%);
+    }
+
+    .card-shadow {
+      box-shadow: 0 10px 30px -5px rgba(10, 37, 64, 0.07), 0 4px 10px -2px rgba(10, 37, 64, 0.03);
+    }
+    
+    .card-shadow-active {
+      box-shadow: 0 20px 40px -10px rgba(10, 37, 64, 0.15), 0 8px 16px -4px rgba(244, 162, 19, 0.15);
+    }
+
+    /* Custom radio / chip transitions */
+    .chip-btn {
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .chip-btn:hover {
+      transform: translateY(-2px);
+    }
+    .chip-btn.active {
+      transform: translateY(-1px);
+    }
+
+    .emotion-card {
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .emotion-card:hover {
+      transform: translateY(-4px) scale(1.02);
+    }
+    .emotion-card.selected {
+      transform: translateY(-4px) scale(1.02);
+    }
+
+    /* Confetti Canvas */
+    #confettiCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body class="bg-mesh min-h-screen text-slate-800 flex flex-col justify-between selection:bg-undip-gold/30 selection:text-undip-navy">
+
+  <!-- Confetti Canvas -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <!-- TOP ANNOUNCEMENT BANNER -->
+  <div class="bg-undip-navy-dark text-slate-200 text-xs py-2 px-4 border-b border-white/10">
+    <div class="max-w-4xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+        <span class="font-medium text-slate-300">Kanal Aspirasi Terbuka Mahasiswa S2 Maksi UNDIP</span>
+      </div>
+      <div class="flex items-center space-x-3 text-slate-400">
+        <span class="flex items-center gap-1">
+          <svg class="w-3.5 h-3.5 text-undip-gold" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.649 2 6.319 2 7c0 5.225 3.34 9.67 8 11.317C14.66 16.67 18 12.225 18 7c0-.682-.057-1.35-.166-2.001A11.954 11.954 0 0110 1.944zM11 14a1 1 0 11-2 0 1 1 0 012 0zm0-7a1 1 0 10-2 0v3a1 1 0 102 0V7z" clip-rule="evenodd"></path>
+          </svg>
+          100% Anonim
+        </span>
+        <span class="hidden sm:inline">|</span>
+        <span class="hidden sm:inline text-slate-400">Tahun Akademik 2026/2027</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVIGATION / HEADER -->
+  <header class="bg-undip-navy text-white sticky top-0 z-50 shadow-lg backdrop-blur-md bg-opacity-95 border-b border-white/10 transition-all">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
+      
+      <!-- Logo & Brand -->
+      <a href="#" class="flex items-center space-x-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-undip-gold to-undip-orange p-0.5 shadow-md group-hover:rotate-6 transition-transform">
+          <div class="w-full h-full bg-undip-navy rounded-[10px] flex items-center justify-center">
+            <span class="text-xl">🎓</span>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-heading font-bold text-lg sm:text-xl tracking-tight text-white">Suara Maksi</span>
+            <span class="text-[10px] bg-undip-gold/20 text-undip-gold border border-undip-gold/40 font-semibold px-2 py-0.5 rounded-full uppercase tracking-wider">UNDIP</span>
+          </div>
+          <p class="text-[11px] text-slate-300 font-light -mt-0.5">Magister Akuntansi · Fakultas Ekonomika dan Bisnis</p>
+        </div>
+      </a>
+
+      <!-- Quick Reset / Info Button -->
+      <div class="flex items-center space-x-2">
+        <button id="soundToggleBtn" title="Toggle audio feedback" class="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 hover:text-undip-gold transition text-xs flex items-center gap-1.5 border border-white/5">
+          <span id="soundIcon">🔔</span>
+          <span class="hidden md:inline text-[11px]">Suara: On</span>
+        </button>
+        <button id="headerResetBtn" title="Mulai Ulang Formulir" class="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white transition text-xs flex items-center gap-1.5 border border-white/5">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+          </svg>
+          <span class="hidden sm:inline text-[11px]">Ulang</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MAIN WRAPPER -->
+  <main class="flex-grow max-w-3xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-10">
+
+    <!-- HERO SECTION -->
+    <section class="text-center mb-8 sm:mb-12">
+      <!-- Badge Safe Space -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-undip-gold/15 text-undip-navy font-medium text-xs border border-undip-gold/30 mb-4 shadow-sm animate-fade-in">
+        <span class="w-2 h-2 rounded-full bg-undip-orange"></span>
+        <span class="font-semibold text-undip-navy">Ruang Curhat & Solusi Akademik S2</span>
+        <span class="text-slate-400">·</span>
+        <span class="text-slate-600">Terbuka & Terjaga</span>
+      </div>
+
+      <!-- Headline -->
+      <h1 class="font-heading font-extrabold text-3xl sm:text-4xl lg:text-5xl text-undip-navy tracking-tight leading-tight mb-4">
+        Kami Mendengar, <br class="hidden sm:inline"/>
+        <span class="bg-gradient-to-r from-undip-navy via-undip-navy-light to-undip-orange bg-clip-text text-transparent underline decoration-undip-gold decoration-wavy decoration-from-font">Kami Peduli.</span>
+      </h1>
+
+      <!-- Sub-headline -->
+      <p class="text-sm sm:text-base text-slate-600 max-w-xl mx-auto leading-relaxed font-normal">
+        Ruang aman untuk membagikan kendala perkuliahan, tesis, atau keseimbangan waktu Anda. 
+        <span class="font-semibold text-undip-navy">Ceritakan apa adanya</span> tanpa rasa cemas.
+      </p>
+
+      <!-- Trust Badges -->
+      <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-6 mt-6 text-xs text-slate-500">
+        <div class="flex items-center gap-1.5 bg-white/70 px-3 py-1.5 rounded-lg border border-slate-200/80 shadow-sm">
+          <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+          <span>Tanpa Login / Akun</span>
+        </div>
+        <div class="flex items-center gap-1.5 bg-white/70 px-3 py-1.5 rounded-lg border border-slate-200/80 shadow-sm">
+          <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+          <span>Enkripsi Privasi Mahasiswa</span>
+        </div>
+        <div class="flex items-center gap-1.5 bg-white/70 px-3 py-1.5 rounded-lg border border-slate-200/80 shadow-sm">
+          <svg class="w-4 h-4 text-undip-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+          <span>Ditindaklanjuti Prodi</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- WIZARD STEP INDICATOR -->
+    <div id="stepIndicatorContainer" class="mb-8">
+      <div class="bg-white rounded-2xl p-4 card-shadow border border-slate-100">
+        <div class="flex items-center justify-between mb-3 px-1">
+          <span class="text-xs font-semibold uppercase tracking-wider text-undip-navy flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-undip-gold"></span>
+            Progres Cerita
+          </span>
+          <span id="stepCounterText" class="text-xs font-bold text-undip-orange bg-undip-gold/15 px-2.5 py-0.5 rounded-full">
+            Langkah 1 dari 4
+          </span>
+        </div>
+
+        <!-- Progress Bar Line -->
+        <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden mb-4 p-0.5 border border-slate-200/60">
+          <div id="progressBar" class="bg-gradient-to-r from-undip-navy via-undip-blue to-undip-gold h-full rounded-full transition-all duration-500 ease-out" style="width: 25%;"></div>
+        </div>
+
+        <!-- Step Pills / Breadcrumb -->
+        <div class="grid grid-cols-4 gap-2 text-center">
+          <button type="button" onclick="goToStep(1)" id="stepTab-1" class="step-tab flex flex-col items-center group cursor-pointer focus:outline-none">
+            <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all bg-undip-navy text-white shadow-sm ring-2 ring-undip-navy/20">1</span>
+            <span class="text-[11px] font-semibold mt-1.5 text-undip-navy transition-colors">Kondisi</span>
+          </button>
+
+          <button type="button" onclick="goToStep(2)" id="stepTab-2" class="step-tab flex flex-col items-center group cursor-pointer focus:outline-none">
+            <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all bg-slate-100 text-slate-400 group-hover:bg-slate-200">2</span>
+            <span class="text-[11px] font-medium mt-1.5 text-slate-400 group-hover:text-slate-600 transition-colors">Fokus</span>
+          </button>
+
+          <button type="button" onclick="goToStep(3)" id="stepTab-3" class="step-tab flex flex-col items-center group cursor-pointer focus:outline-none">
+            <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all bg-slate-100 text-slate-400 group-hover:bg-slate-200">3</span>
+            <span class="text-[11px] font-medium mt-1.5 text-slate-400 group-hover:text-slate-600 transition-colors">Cerita</span>
+          </button>
+
+          <button type="button" onclick="goToStep(4)" id="stepTab-4" class="step-tab flex flex-col items-center group cursor-pointer focus:outline-none">
+            <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all bg-slate-100 text-slate-400 group-hover:bg-slate-200">4</span>
+            <span class="text-[11px] font-medium mt-1.5 text-slate-400 group-hover:text-slate-600 transition-colors">Harapan</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORM WRAPPER (SPA CARDS) -->
+    <form id="suaraMaksiForm" onsubmit="return false;" novalidate>
+
+      <!-- ════════════════════════════════════════════
+           LANGKAH 1: CEK KONDISI (EMOTION CHECK)
+      ════════════════════════════════════════════ -->
+      <div id="stepCard-1" class="step-card bg-white rounded-3xl p-6 sm:p-9 card-shadow border border-slate-100 animate-slide-up">
+        
+        <div class="flex items-center gap-2 mb-2">
+          <span class="px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider bg-undip-gold/15 text-undip-orange">
+            Langkah 1
+          </span>
+          <span class="text-xs text-slate-400 font-medium">· Emotion Check</span>
+        </div>
+
+        <h2 class="font-heading font-bold text-xl sm:text-2xl text-undip-navy mb-2">
+          Bagaimana perasaanmu tentang kuliah S2 saat ini?
+        </h2>
+        <p class="text-sm text-slate-500 mb-6 leading-relaxed">
+          Pilih emoji yang paling menggambarkan isi hatimu hari ini. Kejujuranmu adalah langkah pertama menuju perbaikan.
+        </p>
+
+        <!-- Emotion Grid (4 Options) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-6">
+          
+          <!-- Option 1: Overwhelmed -->
+          <button type="button" onclick="selectEmotion('overwhelmed', this)" data-emotion="overwhelmed" class="emotion-card text-left p-4 sm:p-5 rounded-2xl border-2 border-slate-200 hover:border-undip-navy/50 bg-slate-50/60 hover:bg-white flex items-center gap-4 group focus:outline-none focus:ring-2 focus:ring-undip-gold">
+            <div class="w-14 h-14 rounded-2xl bg-amber-100/70 text-3xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+              😫
+            </div>
+            <div class="flex-grow">
+              <div class="flex items-center justify-between">
+                <h3 class="font-heading font-bold text-base text-slate-800 group-hover:text-undip-navy">Overwhelmed</h3>
+                <span class="check-icon hidden text-undip-navy font-bold">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                </span>
+              </div>
+              <p class="text-xs text-slate-500 mt-0.5">Kewalahan dengan tumpukan tugas, pekerjaan, atau tenggat waktu.</p>
+            </div>
+          </button>
+
+          <!-- Option 2: Confused/Stuck -->
+          <button type="button" onclick="selectEmotion('stuck', this)" data-emotion="stuck" class="emotion-card text-left p-4 sm:p-5 rounded-2xl border-2 border-slate-200 hover:border-undip-navy/50 bg-slate-50/60 hover:bg-white flex items-center gap-4 group focus:outline-none focus:ring-2 focus:ring-undip-gold">
+            <div class="w-14 h-14 rounded-2xl bg-blue-100/70 text-3xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+              🤔
+            </div>
+            <div class="flex-grow">
+              <div class="flex items-center justify-between">
+                <h3 class="font-heading font-bold text-base text-slate-800 group-hover:text-undip-navy">Bingung / Stuck</h3>
+                <span class="check-icon hidden text-undip-navy font-bold">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                </span>
+              </div>
+              <p class="text-xs text-slate-500 mt-0.5">Tidak tahu harus melangkah ke mana pada topik riset atau tugas.</p>
+            </div>
+          </button>
+
+          <!-- Option 3: Burnout -->
+          <button type="button" onclick="selectEmotion('burnout', this)" data-emotion="burnout" class="emotion-card text-left p-4 sm:p-5 rounded-2xl border-2 border-slate-200 hover:border-undip-navy/50 bg-slate-50/60 hover:bg-white flex items-center gap-4 group focus:outline-none focus:ring-2 focus:ring-undip-gold">
+            <div class="w-14 h-14 rounded-2xl bg-rose-100/70 text-3xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+              🥱
+            </div>
+            <div class="flex-grow">
+              <div class="flex items-center justify-between">
+                <h3 class="font-heading font-bold text-base text-slate-800 group-hover:text-undip-navy">Lelah / Burnout</h3>
+                <span class="check-icon hidden text-undip-navy font-bold">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                </span>
+              </div>
+              <p class="text-xs text-slate-500 mt-0.5">Energi terkuras habis, kehilangan motivasi, butuh ruang jeda.</p>
+            </div>
+          </button>
+
+          <!-- Option 4: Neutral with obstacles -->
+          <button type="button" onclick="selectEmotion('neutral', this)" data-emotion="neutral" class="emotion-card text-left p-4 sm:p-5 rounded-2xl border-2 border-slate-200 hover:border-undip-navy/50 bg-slate-50/60 hover:bg-white flex items-center gap-4 group focus:outline-none focus:ring-2 focus:ring-undip-gold">
+            <div class="w-14 h-14 rounded-2xl bg-slate-200/70 text-3xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+              😶
+            </div>
+            <div class="flex-grow">
+              <div class="flex items-center justify-between">
+                <h3 class="font-heading font-bold text-base text-slate-800 group-hover:text-undip-navy">Biasa saja, tapi...</h3>
+                <span class="check-icon hidden text-undip-navy font-bold">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                </span>
+              </div>
+              <p class="text-xs text-slate-500 mt-0.5">Tampak berjalan normal, namun ada hambatan yang mengganjal.</p>
+            </div>
+          </button>
+
+        </div>
+
+        <!-- Empathetic Micro-Feedback Box -->
+        <div id="empathyQuoteBox" class="hidden mb-6 p-4 rounded-2xl bg-gradient-to-r from-undip-gold/10 via-undip-gold/5 to-white border border-undip-gold/30 animate-fade-in">
+          <div class="flex items-start gap-3">
+            <span class="text-xl">💛</span>
+            <div>
+              <p id="empathyQuoteText" class="text-xs sm:text-sm text-undip-navy font-medium leading-relaxed"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Error Warning -->
+        <p id="errorStep1" class="hidden text-rose-500 text-xs font-semibold mb-4 flex items-center gap-1.5">
+          <svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+          Mohon pilih salah satu kondisi emosi Anda untuk melanjutkan.
+        </p>
+
+        <!-- Actions -->
+        <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+          <span class="text-xs text-slate-400">Pilih 1 dari 4 opsi</span>
+          <button type="button" onclick="validateAndGo(1, 2)" class="px-6 py-3 rounded-xl bg-undip-navy hover:bg-undip-navy-light text-white font-medium text-sm flex items-center gap-2 shadow-md hover:shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-undip-gold">
+            <span>Lanjut: Fokus Kendala</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          </button>
+        </div>
+
+      </div>
+
+
+      <!-- ════════════════════════════════════════════
+           LANGKAH 2: FOKUS KENDALA (CHIPS / TAGS)
+      ════════════════════════════════════════════ -->
+      <div id="stepCard-2" class="step-card hidden bg-white rounded-3xl p-6 sm:p-9 card-shadow border border-slate-100 animate-slide-up">
+        
+        <div class="flex items-center gap-2 mb-2">
+          <span class="px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider bg-undip-gold/15 text-undip-orange">
+            Langkah 2
+          </span>
+          <span class="text-xs text-slate-400 font-medium">· Dynamic Category Focus</span>
+        </div>
+
+        <h2 class="font-heading font-bold text-xl sm:text-2xl text-undip-navy mb-2">
+          Bagian mana yang paling menyita pikiranmu saat ini?
+        </h2>
+        <p class="text-sm text-slate-500 mb-6 leading-relaxed">
+          Pilih satu atau lebih kategori yang sesuai dengan situasi Anda. (Bisa pilih lebih dari satu).
+        </p>
+
+        <!-- Selected Categories Counter -->
+        <div class="flex items-center justify-between mb-3 text-xs">
+          <span class="text-slate-500">Pilihan Anda:</span>
+          <span id="selectedChipsCount" class="font-semibold text-undip-navy bg-slate-100 px-2 py-0.5 rounded-full">0 Kategori Dipilih</span>
+        </div>
+
+        <!-- Chips Container -->
+        <div class="flex flex-wrap gap-2.5 sm:gap-3 mb-6">
+          
+          <!-- Chip 1: Tesis/Publikasi -->
+          <button type="button" onclick="toggleChip(this, 'Tesis/Publikasi')" data-chip="Tesis/Publikasi" class="chip-btn px-4 py-3 rounded-2xl border-2 border-slate-200 bg-slate-50/70 text-slate-700 text-xs sm:text-sm font-medium flex items-center gap-2.5 hover:border-undip-gold focus:outline-none">
+            <span class="text-base">📝</span>
+            <span>Tesis / Publikasi</span>
+            <span class="chip-badge hidden w-4 h-4 rounded-full bg-undip-navy text-white text-[10px] items-center justify-center font-bold">✓</span>
+          </button>
+
+          <!-- Chip 2: Pemahaman Matkul Akuntansi -->
+          <button type="button" onclick="toggleChip(this, 'Pemahaman Matkul Akuntansi')" data-chip="Pemahaman Matkul Akuntansi" class="chip-btn px-4 py-3 rounded-2xl border-2 border-slate-200 bg-slate-50/70 text-slate-700 text-xs sm:text-sm font-medium flex items-center gap-2.5 hover:border-undip-gold focus:outline-none">
+            <span class="text-base">📚</span>
+            <span>Pemahaman Matkul Akuntansi</span>
+            <span class="chip-badge hidden w-4 h-4 rounded-full bg-undip-navy text-white text-[10px] items-center justify-center font-bold">✓</span>
+          </button>
+
+          <!-- Chip 3: Dinamika Bimbingan Dosen -->
+          <button type="button" onclick="toggleChip(this, 'Dinamika Bimbingan Dosen')" data-chip="Dinamika Bimbingan Dosen" class="chip-btn px-4 py-3 rounded-2xl border-2 border-slate-200 bg-slate-50/70 text-slate-700 text-xs sm:text-sm font-medium flex items-center gap-2.5 hover:border-undip-gold focus:outline-none">
+            <span class="text-base">🧑‍🏫</span>
+            <span>Dinamika Bimbingan Dosen</span>
+            <span class="chip-badge hidden w-4 h-4 rounded-full bg-undip-navy text-white text-[10px] items-center justify-center font-bold">✓</span>
+          </button>
+
+          <!-- Chip 4: Manajemen Waktu (Kerja vs Kuliah) -->
+          <button type="button" onclick="toggleChip(this, 'Manajemen Waktu (Kerja vs Kuliah)')" data-chip="Manajemen Waktu (Kerja vs Kuliah)" class="chip-btn px-4 py-3 rounded-2xl border-2 border-slate-200 bg-slate-50/70 text-slate-700 text-xs sm:text-sm font-medium flex items-center gap-2.5 hover:border-undip-gold focus:outline-none">
+            <span class="text-base">⏰</span>
+            <span>Manajemen Waktu (Kerja vs Kuliah)</span>
+            <span class="chip-badge hidden w-4 h-4 rounded-full bg-undip-navy text-white text-[10px] items-center justify-center font-bold">✓</span>
+          </button>
+
+          <!-- Chip 5: Administrasi/Fasilitas -->
+          <button type="button" onclick="toggleChip(this, 'Administrasi/Fasilitas')" data-chip="Administrasi/Fasilitas" class="chip-btn px-4 py-3 rounded-2xl border-2 border-slate-200 bg-slate-50/70 text-slate-700 text-xs sm:text-sm font-medium flex items-center gap-2.5 hover:border-undip-gold focus:outline-none">
+            <span class="text-base">🏛️</span>
+            <span>Administrasi / Fasilitas</span>
+            <span class="chip-badge hidden w-4 h-4 rounded-full bg-undip-navy text-white text-[10px] items-center justify-center font-bold">✓</span>
+          </button>
+
+        </div>
+
+        <!-- Custom chip tip -->
+        <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200/80 mb-6 flex items-start gap-2.5 text-xs text-slate-600">
+          <span class="text-base">💡</span>
+          <p>
+            Banyak mahasiswa S2 Maksi UNDIP juga mengalami kendala serupa, terutama keseimbangan antara pekerjaan kantor dan tenggat tesis. Jangan ragu memilih lebih dari satu kategori.
+          </p>
+        </div>
+
+        <!-- Error Warning -->
+        <p id="errorStep2" class="hidden text-rose-500 text-xs font-semibold mb-4 flex items-center gap-1.5">
+          <svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+          Silakan pilih minimal 1 kategori fokus kendala Anda.
+        </p>
+
+        <!-- Actions -->
+        <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+          <button type="button" onclick="goToStep(1)" class="px-5 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-100 text-slate-600 font-medium text-sm flex items-center gap-2 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            <span>Kembali</span>
+          </button>
+          
+          <button type="button" onclick="validateAndGo(2, 3)" class="px-6 py-3 rounded-xl bg-undip-navy hover:bg-undip-navy-light text-white font-medium text-sm flex items-center gap-2 shadow-md hover:shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-undip-gold">
+            <span>Lanjut: Ruang Bercerita</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          </button>
+        </div>
+
+      </div>
+
+
+      <!-- ════════════════════════════════════════════
+           LANGKAH 3: RUANG BERCERITA (TEXT AREA)
+      ════════════════════════════════════════════ -->
+      <div id="stepCard-3" class="step-card hidden bg-white rounded-3xl p-6 sm:p-9 card-shadow border border-slate-100 animate-slide-up">
+        
+        <div class="flex items-center gap-2 mb-2">
+          <span class="px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider bg-undip-gold/15 text-undip-orange">
+            Langkah 3
+          </span>
+          <span class="text-xs text-slate-400 font-medium">· Safe Story Space</span>
+        </div>
+
+        <h2 class="font-heading font-bold text-xl sm:text-2xl text-undip-navy mb-2">
+          Ceritakan lebih detail di sini...
+        </h2>
+        <p class="text-sm text-slate-500 mb-4 leading-relaxed">
+          Tuliskan apa pun yang membebani pikiran Anda. Tidak ada format kaku, ceritakan dengan gaya bahasa Anda sendiri.
+        </p>
+
+        <!-- Quick Inspiration Pills to Help Start Writing -->
+        <div class="mb-3">
+          <span class="text-[11px] font-medium text-slate-400 uppercase tracking-wider block mb-1.5">💡 Inspirasi curhat (klik untuk menyisipkan):</span>
+          <div class="flex flex-wrap gap-1.5 text-xs">
+            <button type="button" onclick="insertPrompt('Saya kesulitan membagi waktu antara lembur kerja akhir bulan dan tenggat revisi tesis...')" class="bg-slate-100 hover:bg-undip-gold/15 hover:text-undip-navy text-slate-600 px-3 py-1 rounded-lg border border-slate-200 transition">
+              + Beban kerja vs Tesis
+            </button>
+            <button type="button" onclick="insertPrompt('Saya merasa bingung menentukan metodologi penelitian tesis dan perlu arahan lebih intensif...')" class="bg-slate-100 hover:bg-undip-gold/15 hover:text-undip-navy text-slate-600 px-3 py-1 rounded-lg border border-slate-200 transition">
+              + Metodologi Tesis
+            </button>
+            <button type="button" onclick="insertPrompt('Sulit mencocokkan jadwal bimbingan dengan dosen pembimbing karena keterbatasan waktu kerja...')" class="bg-slate-100 hover:bg-undip-gold/15 hover:text-undip-navy text-slate-600 px-3 py-1 rounded-lg border border-slate-200 transition">
+              + Jadwal Bimbingan
+            </button>
+          </div>
+        </div>
+
+        <!-- Textarea Container -->
+        <div class="relative mb-2">
+          <textarea 
+            id="ceritaInput"
+            rows="6"
+            placeholder="Misalnya: Saya kesulitan membagi waktu antara pekerjaan kantor di akhir bulan dan deadline revisi proposal tesis..."
+            class="w-full p-4 sm:p-5 rounded-2xl border-2 border-slate-200 focus:border-undip-navy focus:ring-4 focus:ring-undip-gold/20 bg-slate-50/50 hover:bg-white focus:bg-white text-slate-800 text-sm sm:text-base leading-relaxed transition-all resize-y placeholder:text-slate-400 placeholder:italic font-normal"
+            oninput="handleCharCounter(this, 1500)"
+          ></textarea>
+        </div>
+
+        <!-- Character Counter & Sentiment reassurance -->
+        <div class="flex items-center justify-between text-xs text-slate-400 mb-6">
+          <span class="flex items-center gap-1">
+            <svg class="w-3.5 h-3.5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
+            Hanya dibaca oleh tim evaluator akademik Maksi UNDIP
+          </span>
+          <span id="charCounter">0 / 1500 karakter</span>
+        </div>
+
+        <!-- Error Warning -->
+        <p id="errorStep3" class="hidden text-rose-500 text-xs font-semibold mb-4 flex items-center gap-1.5">
+          <svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+          Mohon ceritakan sedikit kendala Anda (minimal 10 karakter).
+        </p>
+
+        <!-- Actions -->
+        <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+          <button type="button" onclick="goToStep(2)" class="px-5 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-100 text-slate-600 font-medium text-sm flex items-center gap-2 transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            <span>Kembali</span>
+          </button>
+          
+          <button type="button" onclick="validateAndGo(3, 4)" class="px-6 py-3 rounded-xl bg-undip-navy hover:bg-undip-navy-light text-white font-medium text-sm flex items-center gap-2 shadow-md hover:shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-undip-gold">
+            <span>Lanjut: Harapan Solusi</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          </button>
+        </div>
+
+      </div>
+
+
+      <!-- ════════════════════════════════════════════
+           LANGKAH 4: HARAPAN (INPUT SINGKAT) & SUBMIT
+      ════════════════════════════════════════════ -->
+      <div id="stepCard-4" class="step-card hidden bg-white rounded-3xl p-6 sm:p-9 card-shadow border border-slate-100 animate-slide-up">
+        
+        <div class="flex items-center gap-2 mb-2">
+          <span class="px-2.5 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider bg-undip-gold/15 text-undip-orange">
+            Langkah 4 (Terakhir)
+          </span>
+          <span class="text-xs text-slate-400 font-medium">· Solusi & Harapan</span>
+        </div>
+
+        <h2 class="font-heading font-bold text-xl sm:text-2xl text-undip-navy mb-2">
+          Bantuan atau solusi seperti apa yang paling kamu harapkan dari Prodi Maksi UNDIP?
+        </h2>
+        <p class="text-sm text-slate-500 mb-6 leading-relaxed">
+          Berikan usulan konkret agar pengelola program studi dapat menghadirkan solusi yang tepat sasaran untuk Anda.
+        </p>
+
+        <!-- Quick Suggestions -->
+        <div class="mb-3">
+          <span class="text-[11px] font-medium text-slate-400 uppercase tracking-wider block mb-1.5">⚡ Saran populer:</span>
+          <div class="flex flex-wrap gap-1.5 text-xs mb-3">
+            <button type="button" onclick="fillHope('Penyediaan sesi konsultasi riset daring di akhir pekan/malam hari.')" class="bg-slate-100 hover:bg-undip-gold/20 text-slate-700 px-2.5 py-1 rounded-lg border border-slate-200 transition">
+              + Bimbingan Daring Fleksibel
+            </button>
+            <button type="button" onclick="fillHope('Workshop berkala penulisan artikel jurnal dan klinik pengolahan data.')" class="bg-slate-100 hover:bg-undip-gold/20 text-slate-700 px-2.5 py-1 rounded-lg border border-slate-200 transition">
+              + Coaching Clinic Tesis
+            </button>
+            <button type="button" onclick="fillHope('Jadwal perkuliahan dan deadline tugas yang lebih terkoordinasi antar dosen.')" class="bg-slate-100 hover:bg-undip-gold/20 text-slate-700 px-2.5 py-1 rounded-lg border border-slate-200 transition">
+              + Koordinasi Deadline Tugas
+            </button>
+          </div>
+        </div>
+
+        <!-- Input Harapan -->
+        <div class="mb-6">
+          <textarea 
+            id="harapanInput"
+            rows="3"
+            placeholder="Tuliskan harapanmu (misal: fleksibilitas bimbingan daring, klinik olah data, forum sharing berkala...)"
+            class="w-full p-4 rounded-2xl border-2 border-slate-200 focus:border-undip-navy focus:ring-4 focus:ring-undip-gold/20 bg-slate-50/50 hover:bg-white focus:bg-white text-slate-800 text-sm leading-relaxed transition-all resize-y placeholder:text-slate-400 placeholder:italic"
+          ></textarea>
+        </div>
+
+        <!-- Ringkasan Singkat Pra-Kirim -->
+        <div class="bg-undip-navy/5 rounded-2xl p-4 border border-undip-navy/10 mb-6">
+          <h4 class="text-xs font-bold text-undip-navy uppercase tracking-wider mb-2 flex items-center gap-1.5">
+            <span>📋</span> Ringkasan Curhat Anda
+          </h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            <div>
+              <span class="text-slate-500">Perasaan Saat Ini:</span>
+              <span id="summaryEmotion" class="font-semibold text-undip-navy ml-1">-</span>
+            </div>
+            <div>
+              <span class="text-slate-500">Kategori Fokus:</span>
+              <span id="summaryCategories" class="font-semibold text-undip-navy ml-1">-</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tombol Kirim Ceritaku (Full CTA) -->
+        <div class="space-y-3">
+          <button 
+            type="button" 
+            id="submitBtn"
+            onclick="handleSubmitStory()"
+            class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-undip-navy via-undip-navy-light to-undip-navy text-white hover:from-undip-navy-dark hover:to-undip-navy font-heading font-bold text-base sm:text-lg flex items-center justify-center gap-3 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-undip-gold/40 border border-undip-gold/30"
+          >
+            <span class="text-xl">✨</span>
+            <span id="btnText">Kirim Ceritaku</span>
+            <svg id="btnArrow" class="w-5 h-5 text-undip-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            
+            <!-- Loading Spinner (Hidden by default) -->
+            <div id="btnSpinner" class="hidden">
+              <svg class="animate-spin h-5 w-5 text-undip-gold" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            </div>
+          </button>
+
+          <button type="button" onclick="goToStep(3)" class="w-full py-2.5 text-center text-xs text-slate-500 hover:text-slate-800 transition">
+            ← Periksa kembali cerita di langkah sebelumnya
+          </button>
+        </div>
+
+      </div>
+
+    </form>
+
+
+    <!-- ════════════════════════════════════════════
+         SUCCESS STATE (WARM & EMPATHETIC)
+    ════════════════════════════════════════════ -->
+    <div id="successCard" class="hidden bg-white rounded-3xl p-8 sm:p-12 card-shadow border border-slate-100 text-center animate-slide-up">
+      
+      <!-- Celebratory Floating Icon Badge -->
+      <div class="relative w-24 h-24 mx-auto mb-6">
+        <div class="absolute inset-0 rounded-full bg-undip-gold/20 animate-ping"></div>
+        <div class="relative w-24 h-24 rounded-full bg-gradient-to-tr from-undip-gold to-undip-orange flex items-center justify-center text-5xl shadow-xl animate-float">
+          ✨
+        </div>
+      </div>
+
+      <!-- UNDIP Badge -->
+      <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 border border-emerald-300 mb-3">
+        ✓ Cerita Berhasil Terkirim Secara Aman
+      </span>
+
+      <!-- Success Warm Message (Exact requested text) -->
+      <h2 class="font-heading font-extrabold text-2xl sm:text-3xl text-undip-navy mb-4 leading-tight">
+        Terima kasih sudah berani bercerita.
+      </h2>
+
+      <div class="max-w-lg mx-auto bg-slate-50 border border-slate-200/80 rounded-2xl p-5 mb-8 shadow-sm">
+        <p class="text-slate-700 text-sm sm:text-base leading-relaxed">
+          "Masukanmu sangat berharga untuk membuat <span class="font-semibold text-undip-navy">Maksi UNDIP</span> menjadi lebih baik. <br class="hidden sm:inline" />
+          <span class="text-undip-orange font-bold">Tetap semangat!</span>"
+        </p>
+      </div>
+
+      <!-- Submission Metadata (Zero PII) -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-md mx-auto text-left text-xs mb-8">
+        <div class="bg-white p-3 rounded-xl border border-slate-200">
+          <span class="text-slate-400 block text-[10px] uppercase">Waktu Simpan</span>
+          <span id="savedTime" class="font-semibold text-slate-700">Baru saja</span>
+        </div>
+        <div class="bg-white p-3 rounded-xl border border-slate-200">
+          <span class="text-slate-400 block text-[10px] uppercase">Status Privasi</span>
+          <span class="font-semibold text-emerald-600 flex items-center gap-1">🔒 100% Anonim</span>
+        </div>
+        <div class="col-span-2 sm:col-span-1 bg-white p-3 rounded-xl border border-slate-200">
+          <span class="text-slate-400 block text-[10px] uppercase">ID Tiket Suara</span>
+          <span id="ticketId" class="font-mono font-bold text-undip-navy">#MKSI-8821</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <button 
+          type="button" 
+          onclick="resetAllForm()" 
+          class="w-full sm:w-auto px-6 py-3 rounded-xl bg-undip-navy hover:bg-undip-navy-light text-white font-medium text-sm flex items-center justify-center gap-2 shadow-md transition"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+          <span>Kirim Cerita Baru</span>
+        </button>
+
+        <button 
+          type="button" 
+          onclick="shareExperience()" 
+          class="w-full sm:w-auto px-6 py-3 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-medium text-sm flex items-center justify-center gap-2 transition"
+        >
+          <svg class="w-4 h-4 text-undip-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z"></path></svg>
+          <span id="shareBtnText">Bagikan Tautan ke Teman S2</span>
+        </button>
+      </div>
+
+      <!-- Hotline / Academic Support Info -->
+      <div class="mt-8 pt-6 border-t border-slate-100 text-xs text-slate-400 flex flex-wrap items-center justify-center gap-4">
+        <span>Butuh bantuan konseling cepat?</span>
+        <a href="mailto:maksi@live.undip.ac.id" class="text-undip-navy font-semibold hover:underline flex items-center gap-1">
+          <span>✉️ Sekretariat Maksi FEB UNDIP</span>
+        </a>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-slate-200/80 py-8 text-center text-xs text-slate-500">
+    <div class="max-w-4xl mx-auto px-4 space-y-3">
+      <div class="flex items-center justify-center space-x-2">
+        <span class="font-heading font-bold text-undip-navy">Suara Maksi</span>
+        <span>·</span>
+        <span>Program Studi Magister Akuntansi</span>
+        <span>·</span>
+        <span class="font-medium text-slate-700">Universitas Diponegoro</span>
+      </div>
+      <p class="text-slate-400 max-w-md mx-auto">
+        Kanal aspirasi independen demi terciptanya iklim akademik S2 yang sehat, suportif, dan humanis di lingkungan Kampus Tembalang, Semarang.
+      </p>
+      <div class="text-[11px] text-slate-400">
+        &copy; 2026 Suara Maksi UNDIP. Semua identitas responden terlindungi 100%.
+      </div>
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════════════════
+       JAVASCRIPT LOGIC & INTERACTIONS
+  ════════════════════════════════════════════ -->
+  <script>
+    // State Application
+    const appState = {
+      currentStep: 1,
+      soundEnabled: true,
+      data: {
+        emotion: null,
+        emotionLabel: '',
+        categories: [],
+        story: '',
+        hope: '',
+        timestamp: null
+      }
+    };
+
+    // Empathetic Micro-Quotes for Step 1
+    const empathyQuotes = {
+      overwhelmed: "Tarik napas perlahan. Mengemban gelar S2 di samping karier atau keluarga memang luar biasa berat. Bebanmu valid, dan kamu tidak sendirian.",
+      stuck: "Kebuntuan dalam tesis atau teori akuntansi adalah bagian alami dari proses riset. Jangan biarkan dirimu terjebak sendirian; ceritakan titik buntu itu.",
+      burnout: "Kelelahan mental bukan tanda kelemahan, melainkan tanda bahwa kamu sudah berusaha keras melampaui batasmu. Istirahatlah sejenak, kami siap menampung ceritamu.",
+      neutral: "Kondisi yang tampak tenang sering kali menyimpan detail kecil yang bisa ditingkatkan. Setiap masukanmu tetap sangat berarti bagi kemajuan Maksi UNDIP."
+    };
+
+    // DOM Elements
+    const progressBar = document.getElementById('progressBar');
+    const stepCounterText = document.getElementById('stepCounterText');
+    const empathyQuoteBox = document.getElementById('empathyQuoteBox');
+    const empathyQuoteText = document.getElementById('empathyQuoteText');
+    const selectedChipsCount = document.getElementById('selectedChipsCount');
+    const charCounter = document.getElementById('charCounter');
+    const ceritaInput = document.getElementById('ceritaInput');
+    const harapanInput = document.getElementById('harapanInput');
+    const summaryEmotion = document.getElementById('summaryEmotion');
+    const summaryCategories = document.getElementById('summaryCategories');
+    const soundToggleBtn = document.getElementById('soundToggleBtn');
+    const soundIcon = document.getElementById('soundIcon');
+
+    // Web Audio API Synthesizer for gentle audio feedback
+    let audioCtx = null;
+    function playGentleSound(type = 'click') {
+      if (!appState.soundEnabled) return;
+      try {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        const now = audioCtx.currentTime;
+
+        if (type === 'click') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(520, now);
+          osc.frequency.exponentialRampToValueAtTime(780, now + 0.08);
+          gain.gain.setValueAtTime(0.06, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+          osc.start(now);
+          osc.stop(now + 0.08);
+        } else if (type === 'success') {
+          // Gentle chord arpeggio
+          const freqs = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+          freqs.forEach((freq, idx) => {
+            const chordOsc = audioCtx.createOscillator();
+            const chordGain = audioCtx.createGain();
+            chordOsc.connect(chordGain);
+            chordGain.connect(audioCtx.destination);
+            chordOsc.type = 'sine';
+            chordOsc.frequency.setValueAtTime(freq, now + (idx * 0.09));
+            chordGain.gain.setValueAtTime(0.07, now + (idx * 0.09));
+            chordGain.gain.exponentialRampToValueAtTime(0.001, now + (idx * 0.09) + 0.4);
+            chordOsc.start(now + (idx * 0.09));
+            chordOsc.stop(now + (idx * 0.09) + 0.4);
+          });
+        }
+      } catch (e) {
+        // Audio not allowed or failed, ignore gracefully
+      }
+    }
+
+    // Toggle Sound
+    soundToggleBtn.addEventListener('click', () => {
+      appState.soundEnabled = !appState.soundEnabled;
+      soundIcon.textContent = appState.soundEnabled ? '🔔' : '🔕';
+      soundToggleBtn.querySelector('span:last-child').textContent = `Suara: ${appState.soundEnabled ? 'On' : 'Off'}`;
+      if (appState.soundEnabled) playGentleSound('click');
+    });
+
+    // Step 1: Emotion Selection
+    function selectEmotion(emotionKey, element) {
+      playGentleSound('click');
+      appState.data.emotion = emotionKey;
+      
+      // Update UI active styles
+      document.querySelectorAll('.emotion-card').forEach(btn => {
+        btn.classList.remove('selected', 'border-undip-navy', 'bg-white', 'card-shadow-active', 'ring-2', 'ring-undip-gold/40');
+        btn.classList.add('border-slate-200', 'bg-slate-50/60');
+        btn.querySelector('.check-icon')?.classList.add('hidden');
+      });
+
+      element.classList.add('selected', 'border-undip-navy', 'bg-white', 'card-shadow-active', 'ring-2', 'ring-undip-gold/40');
+      element.classList.remove('border-slate-200', 'bg-slate-50/60');
+      element.querySelector('.check-icon')?.classList.remove('hidden');
+
+      // Set label
+      const labelMap = {
+        overwhelmed: '😫 Overwhelmed (Kewalahan)',
+        stuck: '🤔 Bingung / Stuck',
+        burnout: '🥱 Lelah / Burnout',
+        neutral: '😶 Biasa saja tapi ada kendala'
+      };
+      appState.data.emotionLabel = labelMap[emotionKey] || emotionKey;
+
+      // Show Empathy Quote
+      if (empathyQuotes[emotionKey]) {
+        empathyQuoteText.textContent = empathyQuotes[emotionKey];
+        empathyQuoteBox.classList.remove('hidden');
+      }
+
+      // Hide error
+      document.getElementById('errorStep1').classList.add('hidden');
+    }
+
+    // Step 2: Chips / Category Tagging
+    function toggleChip(element, categoryName) {
+      playGentleSound('click');
+      const badge = element.querySelector('.chip-badge');
+      const index = appState.data.categories.indexOf(categoryName);
+
+      if (index === -1) {
+        // Add
+        appState.data.categories.push(categoryName);
+        element.classList.add('active', 'border-undip-navy', 'bg-undip-navy', 'text-white', 'shadow-md');
+        element.classList.remove('border-slate-200', 'bg-slate-50/70', 'text-slate-700');
+        badge.classList.remove('hidden');
+        badge.classList.add('flex');
+      } else {
+        // Remove
+        appState.data.categories.splice(index, 1);
+        element.classList.remove('active', 'border-undip-navy', 'bg-undip-navy', 'text-white', 'shadow-md');
+        element.classList.add('border-slate-200', 'bg-slate-50/70', 'text-slate-700');
+        badge.classList.add('hidden');
+        badge.classList.remove('flex');
+      }
+
+      // Update count text
+      const count = appState.data.categories.length;
+      selectedChipsCount.textContent = `${count} Kategori Dipilih`;
+      if (count > 0) {
+        document.getElementById('errorStep2').classList.add('hidden');
+      }
+    }
+
+    // Step 3: Insert Quick Prompt into Textarea
+    function insertPrompt(text) {
+      playGentleSound('click');
+      if (!ceritaInput.value.trim()) {
+        ceritaInput.value = text;
+      } else {
+        ceritaInput.value = ceritaInput.value.trim() + " " + text;
+      }
+      ceritaInput.focus();
+      handleCharCounter(ceritaInput, 1500);
+      document.getElementById('errorStep3').classList.add('hidden');
+    }
+
+    // Character Counter
+    function handleCharCounter(element, max) {
+      const len = element.value.length;
+      charCounter.textContent = `${len} / ${max} karakter`;
+      if (len > 0) {
+        document.getElementById('errorStep3').classList.add('hidden');
+      }
+    }
+
+    // Step 4: Quick fill hope
+    function fillHope(text) {
+      playGentleSound('click');
+      harapanInput.value = text;
+      harapanInput.focus();
+    }
+
+    // Validation & Step Navigation
+    function validateAndGo(current, next) {
+      if (current === 1) {
+        if (!appState.data.emotion) {
+          document.getElementById('errorStep1').classList.remove('hidden');
+          return;
+        }
+      } else if (current === 2) {
+        if (appState.data.categories.length === 0) {
+          document.getElementById('errorStep2').classList.remove('hidden');
+          return;
+        }
+      } else if (current === 3) {
+        const text = ceritaInput.value.trim();
+        if (text.length < 10) {
+          document.getElementById('errorStep3').classList.remove('hidden');
+          return;
+        }
+        appState.data.story = text;
+        
+        // Update summary for step 4
+        summaryEmotion.textContent = appState.data.emotionLabel || '-';
+        summaryCategories.textContent = appState.data.categories.join(', ') || '-';
+      }
+
+      playGentleSound('click');
+      goToStep(next);
+    }
+
+    function goToStep(targetStep) {
+      // Bounds check
+      if (targetStep < 1 || targetStep > 4) return;
+
+      // Restrict jumping ahead without completing previous steps
+      if (targetStep > 1 && !appState.data.emotion) {
+        document.getElementById('errorStep1').classList.remove('hidden');
+        return;
+      }
+      if (targetStep > 2 && appState.data.categories.length === 0) {
+        document.getElementById('errorStep2').classList.remove('hidden');
+        return;
+      }
+
+      appState.currentStep = targetStep;
+
+      // Hide all step cards
+      for (let i = 1; i <= 4; i++) {
+        const card = document.getElementById(`stepCard-${i}`);
+        if (card) {
+          if (i === targetStep) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        }
+      }
+
+      // Update Step Indicators
+      updateIndicators(targetStep);
+
+      // Scroll smoothly to card top
+      const targetCard = document.getElementById(`stepCard-${targetStep}`);
+      if (targetCard) {
+        window.scrollTo({
+          top: targetCard.getBoundingClientRect().top + window.pageYOffset - 120,
+          behavior: 'smooth'
+        });
+      }
+    }
+
+    function updateIndicators(step) {
+      stepCounterText.textContent = `Langkah ${step} dari 4`;
+      progressBar.style.width = `${step * 25}%`;
+
+      for (let i = 1; i <= 4; i++) {
+        const tab = document.getElementById(`stepTab-${i}`);
+        const circle = tab.querySelector('span:first-child');
+        const text = tab.querySelector('span:last-child');
+
+        if (i < step) {
+          // Completed step
+          circle.className = "w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all bg-emerald-500 text-white shadow-sm";
+          circle.innerHTML = "✓";
+          text.className = "text-[11px] font-semibold mt-1.5 text-emerald-600 transition-colors";
+        } else if (i === step) {
+          // Current step
+          circle.className = "w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all bg-undip-navy text-white shadow-sm ring-2 ring-undip-navy/20";
+          circle.innerHTML = i;
+          text.className = "text-[11px] font-semibold mt-1.5 text-undip-navy transition-colors";
+        } else {
+          // Upcoming step
+          circle.className = "w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all bg-slate-100 text-slate-400 group-hover:bg-slate-200";
+          circle.innerHTML = i;
+          text.className = "text-[11px] font-medium mt-1.5 text-slate-400 group-hover:text-slate-600 transition-colors";
+        }
+      }
+    }
+
+    // Submit Story Handler
+    function handleSubmitStory() {
+      appState.data.story = ceritaInput.value.trim();
+      appState.data.hope = harapanInput.value.trim();
+      appState.data.timestamp = new Date().toLocaleString('id-ID');
+
+      const submitBtn = document.getElementById('submitBtn');
+      const btnText = document.getElementById('btnText');
+      const btnArrow = document.getElementById('btnArrow');
+      const btnSpinner = document.getElementById('btnSpinner');
+
+      // Loading State
+      submitBtn.disabled = true;
+      btnText.textContent = "Menyimpan suaramu dengan aman...";
+      btnArrow.classList.add('hidden');
+      btnSpinner.classList.remove('hidden');
+
+      playGentleSound('click');
+
+      // Simulated network/storage delay with feedback
+      setTimeout(() => {
+        // Generate random anonymous ID ticket
+        const randomNum = Math.floor(1000 + Math.random() * 9000);
+        document.getElementById('ticketId').textContent = `#MKSI-${randomNum}`;
+        document.getElementById('savedTime').textContent = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ' WIB';
+
+        // Hide Step Indicator & Form
+        document.getElementById('stepIndicatorContainer').classList.add('hidden');
+        document.getElementById('suaraMaksiForm').classList.add('hidden');
+
+        // Show Success Card
+        const successCard = document.getElementById('successCard');
+        successCard.classList.remove('hidden');
+
+        // Play Success Chime & Launch Confetti
+        playGentleSound('success');
+        triggerConfettiCelebration();
+
+        // Scroll to success card
+        window.scrollTo({
+          top: successCard.getBoundingClientRect().top + window.pageYOffset - 100,
+          behavior: 'smooth'
+        });
+
+        // Reset submit button state
+        submitBtn.disabled = false;
+        btnText.textContent = "Kirim Ceritaku";
+        btnArrow.classList.remove('hidden');
+        btnSpinner.classList.add('hidden');
+
+      }, 1400);
+    }
+
+    // Reset Form to initial state
+    function resetAllForm() {
+      playGentleSound('click');
+      appState.data = {
+        emotion: null,
+        emotionLabel: '',
+        categories: [],
+        story: '',
+        hope: '',
+        timestamp: null
+      };
+
+      // Reset emotion buttons
+      document.querySelectorAll('.emotion-card').forEach(btn => {
+        btn.classList.remove('selected', 'border-undip-navy', 'bg-white', 'card-shadow-active', 'ring-2', 'ring-undip-gold/40');
+        btn.classList.add('border-slate-200', 'bg-slate-50/60');
+        btn.querySelector('.check-icon')?.classList.add('hidden');
+      });
+      empathyQuoteBox.classList.add('hidden');
+
+      // Reset chips
+      document.querySelectorAll('.chip-btn').forEach(btn => {
+        btn.classList.remove('active', 'border-undip-navy', 'bg-undip-navy', 'text-white', 'shadow-md');
+        btn.classList.add('border-slate-200', 'bg-slate-50/70', 'text-slate-700');
+        const badge = btn.querySelector('.chip-badge');
+        badge?.classList.add('hidden');
+        badge?.classList.remove('flex');
+      });
+      selectedChipsCount.textContent = '0 Kategori Dipilih';
+
+      // Reset Inputs
+      ceritaInput.value = '';
+      harapanInput.value = '';
+      charCounter.textContent = '0 / 1500 karakter';
+
+      // Reset UI visibility
+      document.getElementById('successCard').classList.add('hidden');
+      document.getElementById('stepIndicatorContainer').classList.remove('hidden');
+      document.getElementById('suaraMaksiForm').classList.remove('hidden');
+
+      // Navigate to step 1
+      goToStep(1);
+    }
+
+    // Header reset button listener
+    document.getElementById('headerResetBtn').addEventListener('click', () => {
+      if (confirm('Mulai ulang pengisian formulir dari awal?')) {
+        resetAllForm();
+      }
+    });
+
+    // Share Experience (Copy link)
+    function shareExperience() {
+      playGentleSound('click');
+      const shareBtnText = document.getElementById('shareBtnText');
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(window.location.href);
+        const original = shareBtnText.textContent;
+        shareBtnText.textContent = "✓ Tautan Berhasil Disalin!";
+        setTimeout(() => {
+          shareBtnText.textContent = original;
+        }, 2500);
+      } else {
+        alert("Salin tautan ini untuk rekan sesama mahasiswa S2 Maksi UNDIP: " + window.location.href);
+      }
+    }
+
+    // ════════════════════════════════════════════
+    // HIGH-PERFORMANCE CONFETTI CELEBRATION
+    // ════════════════════════════════════════════
+    function triggerConfettiCelebration() {
+      const canvas = document.getElementById('confettiCanvas');
+      const ctx = canvas.getContext('2d');
+      
+      let width = (canvas.width = window.innerWidth);
+      let height = (canvas.height = window.innerHeight);
+
+      window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+
+      const colors = ['#0A2540', '#F4A213', '#E66926', '#0284C7', '#10B981', '#F59E0B'];
+      const pieces = [];
+      const numberOfPieces = 130;
+
+      for (let i = 0; i < numberOfPieces; i++) {
+        pieces.push({
+          x: Math.random() * width,
+          y: Math.random() * height - height,
+          size: Math.random() * 8 + 5,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          rotation: Math.random() * 360,
+          rotationSpeed: Math.random() * 8 - 4,
+          speedY: Math.random() * 3 + 2.5,
+          speedX: Math.random() * 2 - 1,
+          opacity: 1
+        });
+      }
+
+      let animationFrame;
+      let start = performance.now();
+
+      function render(time) {
+        ctx.clearRect(0, 0, width, height);
+        const elapsed = time - start;
+
+        pieces.forEach(p => {
+          p.y += p.speedY;
+          p.x += p.speedX;
+          p.rotation += p.rotationSpeed;
+
+          // Fade out near end of 4.5s
+          if (elapsed > 3000) {
+            p.opacity = Math.max(0, 1 - (elapsed - 3000) / 1500);
+          }
+
+          ctx.save();
+          ctx.globalAlpha = p.opacity;
+          ctx.translate(p.x, p.y);
+          ctx.rotate((p.rotation * Math.PI) / 180);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.7);
+          ctx.restore();
+        });
+
+        if (elapsed < 4500) {
+          animationFrame = requestAnimationFrame(render);
+        } else {
+          ctx.clearRect(0, 0, width, height);
+          cancelAnimationFrame(animationFrame);
+        }
+      }
+
+      animationFrame = requestAnimationFrame(render);
+    }
+  </script>
+
+</body>
+</html>
